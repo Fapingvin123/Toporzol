@@ -1,0 +1,135 @@
+{
+	"weapon_club_spearman__": {
+		"pixelsPerUnit": 1700,
+		"pivot": [1, 0.3]
+	},
+	"weapon_club_swarmcaller__": {
+		"pixelsPerUnit": 1700,
+		"pivot": [1, 0.3]
+	},
+	"weapon_club_swarmcaller_outline__": {
+		"pixelsPerUnit": 1700,
+		"pivot": [0.9, 0.3]
+	},
+	"weapon_club_spearman_outline__": {
+		"pixelsPerUnit": 1700,
+		"pivot": [0.8, 0.3]
+	},
+	"weapon_club_rider_toporzol_": {
+		"pixelsPerUnit": 1700,
+		"pivot": [1, 0.3]
+	},
+	"weapon_club_rider_outline_toporzol_": {
+		"pixelsPerUnit": 1700,
+		"pivot": [0.8, 0.3]
+	},
+	"head_toporzol_": {
+		"pixelsPerUnit": 1800,	
+		"pivot": [0.6, 0.29]
+	},
+	"body_toporzolwizard_toporzol_": {
+		"pixelsPerUnit": 1700,		
+		"pivot": [0.52, 0.69]
+	},
+	"field_toporzol_": {
+		"pixelsPerUnit": 1390,
+		"pivot": [0.5, 0]
+	},
+	"boat_toporzolqueen__": {
+		"pixelsPerUnit": 1000
+	},
+	"boat_toporzolqueen_outline__": {
+		"pixelsPerUnit": 1000
+	},
+	"mountain_toporzol_": {
+		"pixelsPerUnit": 1190,
+		"pivot": [0.5, -0.35]
+	},
+	"toporzolaltar__": {
+		"pixelsPerUnit": 1025,
+		"pivot": [0.5, 0.45]
+	},
+	"monument1_toporzol_": {
+		"pixelsPerUnit": 850,
+		"pivot": [0.51, 0.38]
+	},
+	"monument2_toporzol_": {
+		"pixelsPerUnit": 1280,
+		"pivot": [0.55, 0.12]
+	},
+	"monument3_toporzol_": {
+		"pixelsPerUnit": 1280,
+		"pivot": [0.51, 0.47]
+	},
+	"monument4_toporzol_": {
+		"pixelsPerUnit": 970,
+		"pivot": [0.51, 0.18]
+	},
+	"monument5_toporzol_": {
+		"pixelsPerUnit": 1045,
+		"pivot": [0.45, 0.15]
+	},
+	"monument6_toporzol_": {
+		"pixelsPerUnit": 620,
+		"pivot": [0.51, 0.22]
+	},
+	"monument7_toporzol_": {
+		"pixelsPerUnit": 900
+	},
+	"swarmcall__": {
+		"pixelsPerUnit": 1025,
+		"pivot": [0.5, 0.45]
+	},
+	"shamantransformation__": {
+		"pixelsPerUnit": 1025,
+		"pivot": [0.5, 0.45]
+	},
+	"toporzolfarm__": {
+		"pixelsPerUnit": 1025,
+		"pivot": [0.5, 0.45]
+	},
+	"fruit_toporzol_": {
+		"pixelsPerUnit": 2300,
+		"pivot": [0.5, 0.2]
+	},
+	"fruit_outline_toporzol_": {
+		"pixelsPerUnit": 2050,
+		"pivot": [0.5, 0.25]
+	},
+	"forest_toporzol_": {
+		"pixelsPerUnit": 1900,
+		"pivot": [0.5, 0.42]
+	},
+	"game_toporzol_": {
+		"pixelsPerUnit": 1100,		
+		"pivot": [0.42, 0.35]
+	},
+	"animals_outline_toporzol_": {
+		"pixelsPerUnit": 1300,		
+		"pivot": [0.42, 0.34]
+	},
+	"house_toporzol_1": {
+		"pixelsPerUnit": 1900,
+		"pivot": [0.5, -0.10]
+	},
+	"house_toporzol_2": {
+		"pixelsPerUnit": 2100,
+		"pivot": [0.5, -0.10]
+	},
+	"house_toporzol_3": {
+		"pixelsPerUnit": 1900,
+		"pivot": [0.5, -0.10]
+	},
+	"house_toporzol_4": {
+		"pixelsPerUnit": 1900,
+		"pivot": [0.5, -0.10]
+	},
+	"house_toporzol_5": {
+		"pixelsPerUnit": 1900,
+		"pivot": [0.5, -0.10]
+	},
+	"house_toporzol_7": {
+		"pixelsPerUnit": 3000,
+		"pivot": [0.48, 0.1]
+	}
+}

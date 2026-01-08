@@ -1,0 +1,113 @@
+{
+	"tribes_toporzol": {
+		"English": "Toporzol"
+	},
+	"tribes_toporzol_info": {
+		"English": "The Hordes of Toporzol are tribes from the wastelands unified under the rule of dark witches. They believe in quantity over quality."
+	},
+	"tribes_toporzol_info2": {
+		"English": "The Toporzol can swarm the Square with its weak spearmen. These units do not need to depend on their cities's population. Additionally, has access to dark magic."
+	},
+	"building_names_toporzolfarm": {
+		"English": "Toporzolian Farm"
+	},
+	"building_names_toporzolaltar": {
+		"English": "Altar"
+	},
+	"building_names_swarmcall": {
+		"English": "Swarmcall"
+	},
+	"building_names_shamantransformation": {
+		"English": "Ritual of the Wise"
+	},
+	"technology_names_toporzolfarming": {
+		"English": "Farming"
+	},
+	"technology_names_toporzolmeditation": {
+		"English": "Wizardry"
+	},
+	"technology_names_toporzolrealmeditation": {
+		"English": "Dark Rituals"
+	},
+	"technology_names_toporzolclimbing": {
+		"English": "Hordes"
+	},
+	"unit_names_spearman": {
+		"English": "Spearman"
+	},
+	"unit_names_swarmcaller": {
+		"English": "Swarmcaller"
+	},
+	"unit_names_toporzolmindbender": {
+		"English": "Dark Witch"
+	},
+	"unit_names_toporzolwizard": {
+		"English": "Dark Wizard"
+	},
+	"unit_names_toporzolqueen": {
+		"English": "Shaman of the Swarm"
+	},
+	"unit_abilities_toporzolbless": {
+		"English": "BLESS"
+	},
+	"unit_abilities_swarmcalling": {
+		"English": "SWARMCALLING"
+	},
+	"unit_abilities_transforminto": {
+		"English": "STUDENT"
+	},
+	"unit_abilities_toporzolcurse": {
+		"English": "CURSE"
+	},
+	"unit_abilities_darkwizard": {
+		"English": "MATERIALIZATION"
+	},
+	"unit_abilities_altarsurvive": {
+		"English": "KEEPER OF THE ALTAR"
+	},
+	"unit_abilities_healasgo": {
+		"English": "COMFORTED"
+	},
+	"tooltip_ability_altarsurvive": {
+		"English": "This unit is not sacrificed upon stepping on the altar, instead it gets blessed, increasing their max health."
+	},
+	"tooltip_ability_swarmcalling": {
+		"English": "Can call a spearmen in each of your cities (excluding sieged ones), then receive a max health bonus equal to the number of called spearmen. Has a 3-turn cooldown globally."
+	},
+	"tooltip_ability_transforminto": {
+		"English": "This unit can learn to become a Shaman of the Swarm (super unit) on the altar for 15 stars."
+	},
+	"tooltip_ability_healasgo": {
+		"English": "This unit heals 2 health after each move."
+	},
+	"spearmanjoin_title": {
+		"English": "Great Unification"
+	},
+	"spearmanjoin_description": {
+		"English": "A spearman from a nearby primitive clan appeared in your capital!"
+	},
+	"tooltip_ability_toporzolcurse": {
+		"English": "This unit can curse enemy units, reducing their strength to 1 until their next attack."
+	},
+	"tooltip_ability_darkwizard": {
+		"English": "Upon attacking an enemy unit, gain 1 star."
+	},
+	"building_ability_altardesc": {
+		"English": "The first Toporzolian unit stepping on this altar on this turn is immediately sacrificed. Receive score and population if the unit had 10 or more health."
+	},
+	"building_ability_swarmcalldesc": {
+		"English": "Units with the Swarmcalling ability may train a spearman in every one of your cities (excluding sieged ones) with the blow of a horn."
+	},
+	"building_ability_shamantransdesc": {
+		"English": "Units with the Student ability may transform themselves into a Shaman of the Swarm (super unit) on altars for 15 stars."
+	},
+	"actionbox_unit_toporzolblessed": {
+		"English": "Blessed"
+	},
+	"actionbox_unit_toporzolcursed": {
+		"English": "Cursed"
+	},
+	"actionbox_unit_toporzolcalled": {
+		"English": "Has called a swarm"
+	}
+}
