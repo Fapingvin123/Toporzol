@@ -2,6 +2,7 @@
 using BepInEx.Logging;
 using HarmonyLib;
 using Polytopia.Data;
+using PolytopiaBackendBase.Game;
 using UnityEngine;
 
 namespace Toporzol;
@@ -42,7 +43,7 @@ public static class Main
 
 
     /* Start with 2 spearmen instead of 1 */
-    [HarmonyPrefix]
+    [HarmonyPostfix]
     [HarmonyPatch(typeof(StartMatchAction), nameof(StartMatchAction.ExecuteDefault))]
     public static void ExtraSpearmanAbility(GameState gameState, StartMatchAction __instance)
     {
@@ -51,6 +52,19 @@ public static class Main
             if (gameState.GameLogicData.GetTribeData(playerState.tribe).HasAbility(EnumCache<TribeAbility.Type>.GetType("swarmability")))
             {
                 TrainAroundTile(playerState.Id, EnumCache<UnitData.Type>.GetType("spearman"), playerState.GetCurrentCapitalCoordinates(gameState));
+            }
+        }
+    }
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(StartMatchReaction), nameof(StartMatchReaction.GetDescription))]
+    public static void CustomIntro(GameMode gameMode, StartMatchReaction __instance, ref string __result)
+    {
+        if(GameManager.GameState.TryGetPlayer(__instance.action.PlayerId, out PlayerState player))
+        {
+            if (GameManager.GameState.GameLogicData.GetTribeData(player.tribe).HasAbility(EnumCache<TribeAbility.Type>.GetType("swarmability")))
+            {
+                __result += Localization.Get("toporzol.intro");
             }
         }
     }

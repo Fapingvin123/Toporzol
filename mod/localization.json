@@ -5,8 +5,11 @@
 	"tribes_toporzol_info": {
 		"English": "The Hordes of Toporzol are tribes from the wastelands unified under the rule of dark witches. They believe in quantity over quality."
 	},
-	"tribes_toporzol_info2": {
+	"tribes_info2__toporzol": {
 		"English": "The Toporzol can swarm the Square with its weak spearmen. These units do not need to depend on their cities's population. Additionally, has access to dark magic."
+	},
+	"toporzol.intro":{
+		"English": "\nNeighboring tribes bow in fear to your ruthless rule! An additional spearman has joined your army!"
 	},
 	"building_names_toporzolfarm": {
 		"English": "Toporzolian Farm"
