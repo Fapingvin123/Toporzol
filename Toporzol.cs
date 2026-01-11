@@ -74,6 +74,8 @@ public static class Main
 
     #region Swarmcalling
 
+
+    // count max hp increase of swarmcallers by stacking effects
     [HarmonyPrefix]
     [HarmonyPatch(typeof(UnitState), nameof(UnitState.AddEffect))]
     public static bool StackEffects(UnitState __instance, UnitEffect effect)
@@ -85,6 +87,8 @@ public static class Main
         return true;
     }
 
+    // The stacked effects though have to stay hidden in InteractionBar, and because its method is very very long,
+    // use prefix-postfix. every time interactionbar is opened, temporarily remove, then readd the stacked effects. 
     static int numOfCleanedEffects;
     [HarmonyPrefix]
     [HarmonyPatch(typeof(InteractionBar), nameof(InteractionBar.RefreshUnitOptions))]
@@ -121,6 +125,21 @@ public static class Main
             __instance.unit.UnitState.effects.Add(EnumCache<UnitEffect>.GetType("toporzolcalled"));
         }
         modLogger.LogMessage("Reinstated " + numOfCleanedEffects + " effects");
+        numOfCleanedEffects = 0;
+    }
+
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(GameLogicData), nameof(GameLogicData.CanBuild))]
+    public static void CanSwarmcall(GameState gameState, TileData tile, PlayerState playerState, ImprovementData improvement, ref bool __result)
+    {
+        if(improvement.type == EnumCache<ImprovementData.Type>.GetType("swarmcall"))
+        {
+            if(tile.unit == null || !tile.unit.HasAbility(EnumCache<UnitAbility.Type>.GetType("swarmcalling")) || tile.unit.HasEffect(EnumCache<UnitEffect>.GetType("toporzolcalled")))
+            {
+                __result = false;
+            }
+        }
     }
 
     [HarmonyPostfix]
@@ -128,19 +147,30 @@ public static class Main
     public static void Swarmcalling(BuildAction __instance, GameState gameState)
     {
         TileData tile = gameState.Map.GetTile(__instance.Coordinates);
-        if (tile.unit != null)
+        if (__instance.Type == EnumCache<ImprovementData.Type>.GetType("swarmcall"))
         {
-            tile.unit.AddEffect(EnumCache<UnitEffect>.GetType("toporzolcalled"));
-            int i = 0;
-            foreach (var effect in tile.unit.effects)
+            gameState.TryGetPlayer(__instance.PlayerId, out PlayerState playerState);
+            foreach(TileData city in playerState.GetCityTiles(gameState))
             {
-                i++;
-                if (effect == EnumCache<UnitEffect>.GetType("toporzolcalled"))
+                if (!city.IsBeingCaptured(gameState))
                 {
-                    modLogger.LogMessage("Found " + i);
+                    gameState.ActionStack.Add(new TrainAction(playerState.Id, EnumCache<UnitData.Type>.GetType("spearman"), city.coordinates, 0));
+                    tile.unit.AddEffect(EnumCache<UnitEffect>.GetType("toporzolcalled"));
                 }
             }
         }
+    }
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(UnitDataExtensions), nameof(UnitDataExtensions.GetMaxHealth))]
+    public static void IncreaseMaxHP(UnitState unitState, GameState gameState, ref int __result)
+    {
+        foreach(var effect in unitState.effects)
+        {
+            if(effect == EnumCache<UnitEffect>.GetType("toporzolcalled")) __result += 10;
+        }
+        __result += numOfCleanedEffects;
+        modLogger.LogMessage("End result: "+__result+" of which numOfCleanedEffects: "+numOfCleanedEffects);
     }
 
     #endregion
