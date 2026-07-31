@@ -20,7 +20,7 @@
 				"metal": 2
 			},
 			"unitOverrides": {
-				"warrior": "spearman",
+				"warrior": "toporzolspearman",
 				"giant": "toporzolqueen"
 			},
 			"techOverrides": {
@@ -35,7 +35,7 @@
 			"priceTier": 0,
 			"category": 2,
 			"bonus": 0,
-			"startingUnit": "spearman",
+			"startingUnit": "toporzolspearman",
 			"preview": [
 				{
 					"x": 0,
@@ -59,7 +59,7 @@
 					"x": -1,
 					"y": 2,
 					"terrainType": "field",
-					"unitType": "spearman"
+					"unitType": "toporzolspearman"
 				},
 				{
 					"x": 1,
@@ -72,6 +72,27 @@
 		}
 	},
 	"techData": {
+		"toporzolmagicone": {
+			"idx": -1,
+			"techUnlocks": [
+				"toporzolmagiconeagain"
+			]
+		},
+		"toporzolmagiconeagain":{
+			"idx": -1
+		},
+		"toporzolmagictwo": {
+			"idx": -1
+		},
+		"toporzolmagicthree": {
+			"idx": -1
+		},
+		"toporzolmagicfour": {
+			"idx": -1
+		},
+		"toporzolmagicfive": {
+			"idx": -1
+		},
 		"toporzolfarming": {
 			"techUnlocks": [
 				"construction"
@@ -84,6 +105,7 @@
 		"toporzolsecrettech": {
 			"improvementUnlocks": [
 				"shamantransformation", "swarmcall"],
+			"techUnlocks": ["toporzolmagicone", "toporzolmagictwo", "toporzolmagicthree"],
 			"cost": 0,
 			"idx": -1
 		},
@@ -270,7 +292,7 @@
 		}
 	},
 	"unitData": {
-		"spearman": {
+		"toporzolspearman": {
 			"health": 60,
 			"defence": 18,
 			"movement": 1,
@@ -338,7 +360,8 @@
 			"unitAbilities": [
 				"land",
 				"swarmcalling",
-				"dash"
+				"dash",
+				"toporzolbulky"
 			],
 			"weapon": 1,
 			"promotionLimit": 0,
@@ -363,6 +386,9 @@
 	},
 	"unitAbility": {
 		"toporzolbless": {
+			"idx": -1
+		},
+		"toporzolbulky": {
 			"idx": -1
 		},
 		"toporzolcurse": {

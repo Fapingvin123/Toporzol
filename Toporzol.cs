@@ -11,11 +11,12 @@ namespace Toporzol;
 
 public static class Main
 {
-    private static ManualLogSource? modLogger;
+    public static ManualLogSource modLogger;
     public static void Load(ManualLogSource logger)
     {
         PolyMod.Loader.AddPatchDataType("unitEffect", typeof(UnitEffect));
         Harmony.CreateAndPatchAll(typeof(Main));
+        Harmony.CreateAndPatchAll(typeof(MagicSystemUI));
         modLogger = logger;
         logger.LogMessage("Toporzol.dll loaded.");
     }
@@ -25,7 +26,7 @@ public static class Main
     /// <summary>
     /// Trains a land unit on a random valid neighboring tile, returns success.
     /// </summary>
-    public static bool TrainAroundTile(byte id, UnitData.Type type, WorldCoordinates coords, int cost = 0)
+    public static UnitState TrainAroundTile(PlayerState player, UnitData data, WorldCoordinates coords, bool swtch = false)
     {
         GameState state = GameManager.GameState;
         List<WorldCoordinates> validtiles = new();
@@ -36,10 +37,10 @@ public static class Main
 
         if (validtiles.Count != 0)
         {
-            state.ActionStack.Add(new TrainAction(id, type, validtiles[UnityEngine.Random.RandomRangeInt(0, validtiles.Count)], cost));
-            return true;
+            if(swtch){state.ActionStack.Add(new TrainAction(player.Id, data.type, validtiles[UnityEngine.Random.RandomRangeInt(0, validtiles.Count)], 0)); return null;}
+            return ActionUtils.TrainUnitScored(state, player, state.Map.GetTile(validtiles[UnityEngine.Random.RandomRangeInt(0, validtiles.Count)]), data);
         }
-        return false;
+        return null;
     }
 
     #endregion
@@ -53,7 +54,18 @@ public static class Main
         {
             if (gameState.GameLogicData.GetTribeData(playerState.tribe).HasAbility(EnumCache<TribeAbility.Type>.GetType("swarmability")))
             {
-                TrainAroundTile(playerState.Id, EnumCache<UnitData.Type>.GetType("spearman"), playerState.GetCurrentCapitalCoordinates(gameState));
+                UnitState secondspearman = TrainAroundTile(playerState, gameState.GameLogicData.GetUnitData(EnumCache<UnitData.Type>.GetType("toporzolspearman")), playerState.GetCurrentCapitalCoordinates(gameState));
+                if (secondspearman == null)
+                {
+                    NotificationManager.Notify(Localization.Get("toporzol.nospearmanmsg"), Localization.Get("toporzol.nospearmantitle"));
+                    gameState.ActionStack.Add(new IncreaseCurrencyAction(playerState.Id, playerState.GetCurrentCapitalCoordinates(gameState), 2, 0));
+                }
+                else
+                {
+                    secondspearman.moved = false;
+                    secondspearman.attacked = false;
+                }
+
             }
         }
     }
@@ -74,7 +86,7 @@ public static class Main
 
     #region Swarmcalling
 
-
+    /*
     // count max hp increase of swarmcallers by stacking effects
     [HarmonyPrefix]
     [HarmonyPatch(typeof(UnitState), nameof(UnitState.AddEffect))]
@@ -127,15 +139,15 @@ public static class Main
         modLogger.LogMessage("Reinstated " + numOfCleanedEffects + " effects");
         numOfCleanedEffects = 0;
     }
-
+    */
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(GameLogicData), nameof(GameLogicData.CanBuild))]
     public static void CanSwarmcall(GameState gameState, TileData tile, PlayerState playerState, ImprovementData improvement, ref bool __result)
     {
-        if(improvement.type == EnumCache<ImprovementData.Type>.GetType("swarmcall"))
+        if (improvement.type == EnumCache<ImprovementData.Type>.GetType("swarmcall"))
         {
-            if(tile.unit == null || !tile.unit.HasAbility(EnumCache<UnitAbility.Type>.GetType("swarmcalling")) || tile.unit.HasEffect(EnumCache<UnitEffect>.GetType("toporzolcalled")))
+            if (tile.unit == null || !tile.unit.HasAbility(EnumCache<UnitAbility.Type>.GetType("swarmcalling")) || tile.unit.HasEffect(EnumCache<UnitEffect>.GetType("toporzolcalled")))
             {
                 __result = false;
             }
@@ -150,28 +162,79 @@ public static class Main
         if (__instance.Type == EnumCache<ImprovementData.Type>.GetType("swarmcall"))
         {
             gameState.TryGetPlayer(__instance.PlayerId, out PlayerState playerState);
-            foreach(TileData city in playerState.GetCityTiles(gameState))
+            tile.unit.AddEffect(EnumCache<UnitEffect>.GetType("toporzolcalled"));
+            foreach (TileData city in playerState.GetCityTiles(gameState))
             {
-                if (!city.IsBeingCaptured(gameState))
-                {
-                    gameState.ActionStack.Add(new TrainAction(playerState.Id, EnumCache<UnitData.Type>.GetType("spearman"), city.coordinates, 0));
-                    tile.unit.AddEffect(EnumCache<UnitEffect>.GetType("toporzolcalled"));
-                }
+                //gameState.ActionStack.Add(new TrainAction(playerState.Id, EnumCache<UnitData.Type>.GetType("spearman"), city.coordinates, 0));
+                TrainAroundTile(playerState, gameState.GameLogicData.GetUnitData(EnumCache<UnitData.Type>.GetType("toporzolspearman")), city.coordinates, true);
+                
             }
         }
     }
 
-    [HarmonyPostfix]
+    /*[HarmonyPostfix]
     [HarmonyPatch(typeof(UnitDataExtensions), nameof(UnitDataExtensions.GetMaxHealth))]
     public static void IncreaseMaxHP(UnitState unitState, GameState gameState, ref int __result)
     {
-        foreach(var effect in unitState.effects)
+        foreach (var effect in unitState.effects)
         {
-            if(effect == EnumCache<UnitEffect>.GetType("toporzolcalled")) __result += 10;
+            if (effect == EnumCache<UnitEffect>.GetType("toporzolcalled")) __result += 10;
         }
         __result += numOfCleanedEffects;
-        modLogger.LogMessage("End result: "+__result+" of which numOfCleanedEffects: "+numOfCleanedEffects);
+        modLogger.LogMessage("End result: " + __result + " of which numOfCleanedEffects: " + numOfCleanedEffects);
+    }*/
+
+    #endregion
+
+    #region Bulky
+    private static bool IsTrainingBulkyUnit = false;
+
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(TrainCommand), nameof(TrainCommand.IsValid))]
+    private static void MaybeWantsToTrainABulkyUnit(TrainCommand __instance, GameState state, string validationError)
+    {
+        if (state.GameLogicData.GetUnitData(__instance.Type).HasAbility(EnumCache<UnitAbility.Type>.GetType("toporzolbulky")))
+            IsTrainingBulkyUnit = true;
     }
 
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(TrainCommand), nameof(TrainCommand.IsValid))]
+    private static void PrePostDisable(TrainCommand __instance, GameState state, string validationError)
+    {
+        IsTrainingBulkyUnit = false;
+    }
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(CommandValidation), nameof(CommandValidation.CanCitySupportUnit))]
+    private static void BulkyNeedsMorePopulation(ref bool __result, GameState state, WorldCoordinates coordinates)
+    {
+        if (IsTrainingBulkyUnit)
+        {
+            TileData tile = state.Map.GetTile(coordinates);
+            TileData tile2 = state.Map.GetTile(tile.rulingCityCoordinates);
+            if (tile2 == null || tile2.improvement == null || tile2.improvement.type != ImprovementData.Type.City)
+            {
+                return;
+            }
+            __result = state.Map.GetCityUnitCount(tile2.coordinates) < tile2.improvement.level;
+        }
+    }
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(MapDataExtensions), nameof(MapDataExtensions.GetCityUnitCount))]
+    private static void CountBulkiesOnceAgain(this MapData mapData, WorldCoordinates cityCoordinates, ref int __result)
+    {
+        
+		int num = 0;
+		TileData[] tiles = mapData.Tiles;
+		foreach (TileData tileData in tiles)
+		{
+			if (tileData.unit != null && tileData.unit.home == cityCoordinates && tileData.unit.HasAbility(EnumCache<UnitAbility.Type>.GetType("toporzolbulky")))
+			{
+				num++;
+			}
+		}
+        __result += num;
+    }
     #endregion
 }

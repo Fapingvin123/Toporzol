@@ -1,5 +1,5 @@
 {
-	"weapon_club_spearman__": {
+	"weapon_club_toporzolspearman__": {
 		"pixelsPerUnit": 1700,
 		"pivot": [1, 0.3]
 	},
@@ -11,7 +11,7 @@
 		"pixelsPerUnit": 1700,
 		"pivot": [0.9, 0.3]
 	},
-	"weapon_club_spearman_outline__": {
+	"weapon_club_toporzolspearman_outline__": {
 		"pixelsPerUnit": 1700,
 		"pivot": [0.8, 0.3]
 	},
@@ -25,7 +25,7 @@
 	},
 	"head_toporzol_": {
 		"pixelsPerUnit": 1800,	
-		"pivot": [0.6, 0.29]
+		"pivot": [0.55, 0.29]
 	},
 	"body_toporzolwizard_toporzol_": {
 		"pixelsPerUnit": 1700,		

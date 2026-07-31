@@ -11,6 +11,14 @@
 	"toporzol.intro":{
 		"English": "\nNeighboring tribes bow in fear to your ruthless rule! An additional spearman has joined your army!"
 	},
+	"toporzol.nospearmanmsg":{
+		"English": "You will instead start with extra stars."
+	},
+	"toporzol.nospearmantitle":{
+		"English": "Couldn't start with two spearmen!"
+	},
+
+
 	"building_names_toporzolfarm": {
 		"English": "Toporzolian Farm"
 	},
@@ -23,6 +31,7 @@
 	"building_names_shamantransformation": {
 		"English": "Ritual of the Wise"
 	},
+
 	"technology_names_toporzolfarming": {
 		"English": "Farming"
 	},
@@ -35,7 +44,16 @@
 	"technology_names_toporzolclimbing": {
 		"English": "Hordes"
 	},
-	"unit_names_spearman": {
+	"technology_names_toporzolmagicone":{
+		"English": "TEST 1"
+	},
+	"technology_names_toporzolmagictwo":{
+		"English": "TEST 2"
+	},
+	"technology_names_toporzolmagicthree":{
+		"English": "TEST 3"
+	},
+	"unit_names_toporzolspearman": {
 		"English": "Spearman"
 	},
 	"unit_names_swarmcaller": {
@@ -70,6 +88,12 @@
 	},
 	"unit_abilities_healasgo": {
 		"English": "COMFORTED"
+	},
+	"unit_abilities_toporzolbulky": {
+		"English": "BULKY"
+	},
+	"tooltip_ability_toporzolbulky": {
+		"English": "The city needs two population to support this unit."
 	},
 	"tooltip_ability_altarsurvive": {
 		"English": "This unit is not sacrificed upon stepping on the altar, instead it gets blessed, increasing their max health."
