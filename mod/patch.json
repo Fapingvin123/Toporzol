@@ -293,11 +293,11 @@
 	},
 	"unitData": {
 		"toporzolspearman": {
-			"health": 60,
-			"defence": 18,
+			"health": 50,
+			"defence": 20,
 			"movement": 1,
 			"range": 1,
-			"attack": 18,
+			"attack": 20,
 			"cost": 1,
 			"unitAbilities": [
 				"land",
